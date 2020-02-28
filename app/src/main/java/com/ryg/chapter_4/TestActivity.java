@@ -35,6 +35,7 @@ public class TestActivity extends Activity implements OnClickListener {
     }
 
     private void measureView() {
+        //为什么可以传(1 << 30) - 1   这样给view设置的宽度就非常大  然后在onmeasure方法中会有求出一个合适的大小 跟设置的比较取最小值
         int widthMeasureSpec = MeasureSpec.makeMeasureSpec((1 << 30) - 1, MeasureSpec.AT_MOST);
         int heightMeasureSpec = MeasureSpec.makeMeasureSpec(100, MeasureSpec.EXACTLY);
         view.measure(widthMeasureSpec, heightMeasureSpec);

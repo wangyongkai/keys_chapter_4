@@ -134,29 +134,29 @@ public class HorizontalScrollViewEx extends ViewGroup {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {//当前viewgroup的MS
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int measuredWidth = 0;
         int measuredHeight = 0;
         final int childCount = getChildCount();
-        measureChildren(widthMeasureSpec, heightMeasureSpec);
+        measureChildren(widthMeasureSpec, heightMeasureSpec);//循环遍历子view进行测量
 
         int widthSpaceSize = MeasureSpec.getSize(widthMeasureSpec);
         int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightSpaceSize = MeasureSpec.getSize(heightMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
-        if (childCount == 0) {
+        if (childCount == 0) {//没有子元素
             setMeasuredDimension(0, 0);
-        } else if (widthSpecMode == MeasureSpec.AT_MOST && heightSpecMode == MeasureSpec.AT_MOST) {
+        } else if (widthSpecMode == MeasureSpec.AT_MOST && heightSpecMode == MeasureSpec.AT_MOST) {//都是wrap_content
             final View childView = getChildAt(0);
             measuredWidth = childView.getMeasuredWidth() * childCount;
             measuredHeight = childView.getMeasuredHeight();
             setMeasuredDimension(measuredWidth, measuredHeight);
-        } else if (heightSpecMode == MeasureSpec.AT_MOST) {
+        } else if (heightSpecMode == MeasureSpec.AT_MOST) {//宽度是match_parent 高度是wrap_content
             final View childView = getChildAt(0);
             measuredHeight = childView.getMeasuredHeight();
             setMeasuredDimension(widthSpaceSize, childView.getMeasuredHeight());
-        } else if (widthSpecMode == MeasureSpec.AT_MOST) {
+        } else if (widthSpecMode == MeasureSpec.AT_MOST) {//高度是match_parent 宽度是wrap_content
             final View childView = getChildAt(0);
             measuredWidth = childView.getMeasuredWidth() * childCount;
             setMeasuredDimension(measuredWidth, heightSpaceSize);
@@ -164,7 +164,7 @@ public class HorizontalScrollViewEx extends ViewGroup {
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {//需要对每个子view进行layout 放到合适的位置
         int childLeft = 0;
         final int childCount = getChildCount();
         mChildrenSize = childCount;

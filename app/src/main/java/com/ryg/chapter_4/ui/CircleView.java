@@ -24,7 +24,7 @@ public class CircleView extends View {
         this(context, attrs, 0);
     }
 
-    public CircleView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CircleView(Context context, AttributeSet attrs, int defStyleAttr) {//res/values/attrs.xml文件
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleView);
         mColor = a.getColor(R.styleable.CircleView_circle_color, Color.RED);
@@ -37,8 +37,7 @@ public class CircleView extends View {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {//这是根据父布局的MS和当前view的layout计算出的当前view的MS
         int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -51,11 +50,20 @@ public class CircleView extends View {
         } else if (heightSpecMode == MeasureSpec.AT_MOST) {
             setMeasuredDimension(widthSpecSize, 200);
         }
+        // super.onMeasure(widthMeasureSpec, heightMeasureSpec);//1.此方法调用也可以。2.如果放在最后 则会覆盖掉前面的setMeasuredDimension
+
+        //  setMeasuredDimension(150,150);
+        //  setMeasuredDimension(500,500);//调用多次以最后一次为准
+
+        //结论： view的onMeasure方法要重写 解决wrap_content问题
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        //处理padding  
         final int paddingLeft = getPaddingLeft();
         final int paddingRight = getPaddingRight();
         final int paddingTop = getPaddingTop();
